@@ -5,7 +5,17 @@ import './App.css';
 import {Navbar, Nav, NavbarBrand} from 'reactstrap';
 // import Menu
 import Menu from './components/MenuComponent';
+// importing the data from js file
+import {DISHES} from './shared/dishes';
 class App extends Component {
+  // subsequently specifying state of the imported dishes
+  constructor(props){
+    super(props);
+    this.state={
+      dishes:DISHES
+    };
+  }
+  // state defined above
   render() {
     return (
       <div >
@@ -14,10 +24,11 @@ class App extends Component {
            <NavbarBrand href="/">Restaurant </NavbarBrand>
          </div>
        </Navbar>
-       <Menu />
+       <Menu dishes={this.state.dishes} />
       </div>
     );
   }
 }
-
+// <Menu dishes={this.state.dishes} />
+// this is how the dishes is made available to the Menu component as "props"
 export default App;
