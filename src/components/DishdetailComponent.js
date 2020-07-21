@@ -8,7 +8,7 @@ class Dishdetail extends Component{
     render(){
         if(this.props.dish!=null)
         return (
-            <div>
+            <div class="container">
                 {this.renderDish(this.props.dish)}
                 <Card>
                     <CardTitle>Comments</CardTitle>
@@ -49,7 +49,9 @@ class Dishdetail extends Component{
                         {comment_obj.comment}
                     </li>
                     <li class='list-group-item blockquote-footer'> 
-                        {comment_obj.author}&nbsp;,{comment_obj.date}
+                        {comment_obj.author}&nbsp;,
+                        {new Intl.DateTimeFormat('en-US',
+                        {year :'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment_obj.date)))}
                     </li>
                 </div>
                 

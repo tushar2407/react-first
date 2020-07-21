@@ -3,28 +3,30 @@ import logo from './logo.svg';
 import './App.css';
 // adding Navbar
 import {Navbar, Nav, NavbarBrand} from 'reactstrap';
-// import Menu
+/*// import Menu
 import Menu from './components/MenuComponent';
 // importing the data from js file
-import {DISHES} from './shared/dishes';
+import {DISHES} from './shared/dishes';*/
+import Main from './components/MainComponent';
 class App extends Component {
   // subsequently specifying state of the imported dishes
-  constructor(props){
+  /*constructor(props){
     super(props);
     this.state={
       dishes:DISHES
     };
-  }
+  }*/
   // state defined above
   render() {
     return (
       <div >
-       <Navbar dark color="primary">
+       {/* <Navbar dark color="primary">
          <div className="conatainer">
            <NavbarBrand href="/">Restaurant </NavbarBrand>
          </div>
        </Navbar>
-       <Menu dishes={this.state.dishes} />
+       <Menu dishes={this.state.dishes} /> */}
+       <Main />
       </div>
     );
   }

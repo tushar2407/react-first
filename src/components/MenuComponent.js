@@ -5,51 +5,51 @@ import Dishdetail from './DishdetailComponent';
 class Menu extends Component{
     constructor(props){
         super(props);
-        this.state={
-            selectedDish:null
-        }
+        // this.state={
+        //     selectedDish:null
+        // }
         console.log("Menu component constructor is called");
     }
 
     componentDidMount(){
         console.log("Menu component componentDidMount was called");
     }
-    onDishSelect(dish){
-        if(this.state.selectedDish===dish){
-            this.setState({
-                selectedDish:null
-            });
-        }
-        else{
-            this.setState({
-                selectedDish:dish
-            });
-        }
-    }
+    // onDishSelect(dish){
+    //     if(this.state.selectedDish===dish){
+    //         this.setState({
+    //             selectedDish:null
+    //         });
+    //     }
+    //     else{
+    //         this.setState({
+    //             selectedDish:dish
+    //         });
+    //     }
+    // }
 
-    renderDish(dish){
-        if(dish != null){
-            return (
-                <CardDeck>
-                    <Card>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
-                        <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardBody>{dish.description}</CardBody>
-                        </CardBody>
-                    </Card>
-                    {/* <Card>
-                        <DishdetailComponent comment1={this.state.selectedDish.comments} />
-                    </Card> */}
-                </CardDeck>
-            )
-        }
-        else{
-            return (
-                <div></div>
-            );
-        }
-    }
+    // renderDish(dish){
+    //     if(dish != null){
+    //         return (
+    //             <CardDeck>
+    //                 <Card>
+    //                     <CardImg width="100%" src={dish.image} alt={dish.name} />
+    //                     <CardBody>
+    //                         <CardTitle>{dish.name}</CardTitle>
+    //                         <CardBody>{dish.description}</CardBody>
+    //                     </CardBody>
+    //                 </Card>
+    //                 {/* <Card>  // this for when the dishdetail component is a const returned
+    //                     <DishdetailComponent comment1={this.state.selectedDish.comments} />
+    //                 </Card> */}
+    //             </CardDeck>
+    //         )
+    //     }
+    //     else{
+    //         return (
+    //             <div></div>
+    //         );
+    //     }
+    // }
     render(){
         // the below line was when the dishes was defined in the
         // state of this component but now its is provided as props
@@ -72,7 +72,8 @@ class Menu extends Component{
                 ); **/
                 return (
                     <div key={dish.id} className="col-12 col-md-5 m-1">
-                        <Card onClick={()=>this.onDishSelect(dish)}>
+                        {/* <Card onClick={()=>this.onDishSelect(dish)}> */}
+                        <Card onClick={()=>this.props.onClick(dish.id)}>
                             <CardImg width="100%" src={dish.image} alt={dish.name}/>
                             <CardImgOverlay>
                                 <CardTitle>{dish.name}</CardTitle>
@@ -99,10 +100,7 @@ class Menu extends Component{
                 <div className="row">
                     {menu}
                 </div>
-                <div className="row">
-                    {this.renderDish(this.state.selectedDish)}
-                </div>
-                <Dishdetail dish={this.state.selectedDish}/>
+                {/* <Dishdetail dish={this.state.selectedDish}/> */}
             </div>
         );
     }
