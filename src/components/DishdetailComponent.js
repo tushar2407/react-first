@@ -6,6 +6,7 @@ class Dishdetail extends Component{
         console.log("asdas");
     }
     render(){
+      console.log("Dishdetail Component render invoked");
         if(this.props.dish!=null)
         return (
             <div class="container">
@@ -20,6 +21,13 @@ class Dishdetail extends Component{
         );
         else
         return(<div></div>);
+    }
+    componentDidMount(){
+        console.log("DishDetail component componentDidMount was called");
+    }
+
+    componentDidUpdate(){
+      console.log("Dishdetail Component componentDidUpdate invoked");
     }
     renderDish(dish){
         if(dish != null){

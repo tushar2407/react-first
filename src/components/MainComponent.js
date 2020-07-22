@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // adding Navbar
-import {Navbar, Nav, NavbarBrand} from 'reactstrap';
+import {Navbar, NavbarBrand} from 'reactstrap';
 // import Menu
 import Menu from './MenuComponent';
 // importing the data from js file

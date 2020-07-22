@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 // adding Navbar
-import {Navbar, Nav, NavbarBrand} from 'reactstrap';
+// import {Navbar, Nav, NavbarBrand} from 'reactstrap';
 /*// import Menu
 import Menu from './components/MenuComponent';
 // importing the data from js file
