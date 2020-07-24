@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // adding Navbar
-import {Navbar, NavbarBrand} from 'reactstrap';
+// import {Navbar, NavbarBrand} from 'reactstrap';
 // import Menu
 import Menu from './MenuComponent';
 // importing the data from js file
 import {DISHES} from '../shared/dishes';
 import Dishdetail from './DishdetailComponent';
-
+// importing header
+import Header from './HeaderComponent';
+import Footer from './FooterComponent';
 class Main extends Component {
   // subsequently specifying state of the imported dishes
   constructor(props){
@@ -33,15 +35,17 @@ class Main extends Component {
   render() {
     return (
       <div >
-       <Navbar dark color="primary">
+        <Header />
+       {/* <Navbar dark color="primary">
          <div className="conatainer">
            <NavbarBrand href="/">Restaurant </NavbarBrand>
          </div>
-       </Navbar>
+       </Navbar> */}
        <Menu dishes={this.state.dishes}
             onClick={(dishId)=>this.onDishSelect(dishId)} />
        <Dishdetail 
             dish={this.state.dishes.filter((dish)=> dish.id===this.state.selectedDish)[0]}/>
+       <Footer />
       </div>
     );
   }
