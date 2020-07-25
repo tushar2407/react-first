@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-// adding Navbar
-// import {Navbar, Nav, NavbarBrand} from 'reactstrap';
 /*// import Menu
 import Menu from './components/MenuComponent';
 // importing the data from js file
 import {DISHES} from './shared/dishes';*/
 import Main from './components/MainComponent';
+import { BrowserRouter } from 'react-router-dom';
 class App extends Component {
   // subsequently specifying state of the imported dishes
   /*constructor(props){
@@ -19,15 +18,12 @@ class App extends Component {
   // state defined above
   render() {
     return (
-      <div >
-       {/* <Navbar dark color="primary">
-         <div className="conatainer">
-           <NavbarBrand href="/">Restaurant </NavbarBrand>
-         </div>
-       </Navbar>
-       <Menu dishes={this.state.dishes} /> */}
-       <Main />
-      </div>
+      <BrowserRouter>
+        <div >
+          {/* <Menu dishes={this.state.dishes} />  */}
+          <Main />
+        </div>
+      </BrowserRouter>
     );
   }
 }

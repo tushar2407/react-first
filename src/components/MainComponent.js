@@ -10,41 +10,55 @@ import Dishdetail from './DishdetailComponent';
 // importing header
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
+
+// routing
+import Home from './HomeComponent';
+import { Switch, Route, Redirect} from 'react-router-dom';
 class Main extends Component {
   // subsequently specifying state of the imported dishes
   constructor(props){
     super(props);
     this.state={
       dishes:DISHES,
-      selectedDish:null
+      // selectedDish:null
     };
   }
-  onDishSelect(dishId){
-        if(this.state.selectedDish===dishId){
-            this.setState({
-                selectedDish:null
-            });
-        }
-        else{
-            this.setState({
-                selectedDish:dishId
-            });
-        }
-    }
+  // onDishSelect(dishId){
+  //       if(this.state.selectedDish===dishId){
+  //           this.setState({
+  //               selectedDish:null
+  //           });
+  //       }
+  //       else{
+  //           this.setState({
+  //               selectedDish:dishId
+  //           });
+  //       }
+  //   }
   // state defined above
   render() {
+    const HomePage = () => {
+      return (
+        <Home />
+      );
+    }
     return (
       <div >
         <Header />
+        <Switch>
+          <Route path="/home" component={HomePage} />
+          <Route exact path="/menu" component={() => <Menu dishes={this.state.dishes} />} />
+          <Redirect to="/home"/>
+        </Switch>
        {/* <Navbar dark color="primary">
          <div className="conatainer">
            <NavbarBrand href="/">Restaurant </NavbarBrand>
          </div>
        </Navbar> */}
-       <Menu dishes={this.state.dishes}
+       {/* <Menu dishes={this.state.dishes}
             onClick={(dishId)=>this.onDishSelect(dishId)} />
        <Dishdetail 
-            dish={this.state.dishes.filter((dish)=> dish.id===this.state.selectedDish)[0]}/>
+            dish={this.state.dishes.filter((dish)=> dish.id===this.state.selectedDish)[0]}/> */}
        <Footer />
       </div>
     );
