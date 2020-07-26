@@ -85,15 +85,19 @@
 // export default Menu;
 /* Above code is commented to make a functional component of Menu  */
 import React from 'react';
-import {Card, CardImg, CardImgOverlay, CardTitle} from 'reactstrap';
+import {Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem} from 'reactstrap';
+import {Link} from 'react-router-dom';
 function RenderMenuItem({dish,onClick}){
     console.log("asdasd");
     return (
-        <Card onClick={()=>onClick(dish.id)}>
+        // <Card onClick={()=>onClick(dish.id)}> as onClick is not available now
+        <Card >
+            <Link to={`/menu/${dish.id}`} > {/* **Attention to back quotes to render js object** */}
             <CardImg width="100%" src={dish.image} alt={dish.name}/>
             <CardImgOverlay>
                 <CardTitle>{dish.name}</CardTitle>
             </CardImgOverlay>
+            </Link>
         </Card>
     );
 }
@@ -104,13 +108,23 @@ const Menu=(props)=>{
             console.log("sdsd");
             return (
                 <div key={dish.id} className="col-12 col-md-5 m-1">
-                    <RenderMenuItem dish={dish} onClick={props.onClick}  />                  
+                    {/* <RenderMenuItem dish={dish} onClick={props.onClick}  />   Now do to maincomponent to catch the incoming index of dish                */}
+                    <RenderMenuItem dish={dish}  />                  
                 </div>
             )
         }
     );
     return (
         <div className="container">
+            <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Menu</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3> Menu </h3>
+                </div>
+            </div>
             <div className="row">
                 {menu}
             </div>
