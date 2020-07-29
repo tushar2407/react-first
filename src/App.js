@@ -7,6 +7,13 @@ import Menu from './components/MenuComponent';
 import {DISHES} from './shared/dishes';*/
 import Main from './components/MainComponent';
 import { BrowserRouter } from 'react-router-dom';
+// redux 
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/configureStore';
+const store= ConfigureStore();
+// now surreound your react application with provider
+// then make use of connect() to connect react app to redux store
+// go to the main component
 class App extends Component {
   // subsequently specifying state of the imported dishes
   /*constructor(props){
@@ -18,12 +25,14 @@ class App extends Component {
   // state defined above
   render() {
     return (
-      <BrowserRouter>
-        <div >
-          {/* <Menu dishes={this.state.dishes} />  */}
-          <Main />
-        </div>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <div >
+            {/* <Menu dishes={this.state.dishes} />  */}
+            <Main />
+          </div>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
