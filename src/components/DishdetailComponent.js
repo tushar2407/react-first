@@ -82,8 +82,8 @@ class Dishdetail extends Component{
                               show="touched"
                               messages={{
                                   required :'Required',
-                                  minLength:'Must be grater than 3 chars',
-                                  maxLength:'Must be lest than 15'
+                                  minLength:'Must be greater than 3 characters',
+                                  maxLength:'Must be lest than or equal to 15 chracters'
                               }}
                            />
                          </Col>
