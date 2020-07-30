@@ -1,15 +1,32 @@
 import React, {Component} from 'react';
-import {Card, CardImg,  CardTitle, CardBody, CardDeck, Breadcrumb, BreadcrumbItem} from 'reactstrap';
+import {Card, CardImg,  CardTitle, CardBody, CardDeck, Breadcrumb, BreadcrumbItem, 
+  Button, ModalHeader, Form, Label, Input,Row,Col,
+  Modal,
+  ModalBody,
+  FormGroup,
+  
+  } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { LocalForm, Control, Errors } from 'react-redux-form';
+const required=(val)=> val && val.length;
+const maxLength=(len)=> (val)=> !(val) || (val.length<=len);
+const minLength=(len)=> (val)=> (val) && (val.length >=len);
+const isNumber = (val)=>!isNaN(Number(val));
+const validEmail=(val)=> /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
 class Dishdetail extends Component{
     constructor(props){
         super(props);
-        console.log("asdas");
+        this.state={
+          isModalOpen:false
+        };
+        this.toggleModal=this.toggleModal.bind(this);
     }
     render(){
       console.log("Dishdetail Component render invoked");
         if(this.props.dish!=null)
         return (
+          <React.Fragment>
             <div class="container">
               <div className="row">
                 <Breadcrumb>
@@ -27,7 +44,72 @@ class Dishdetail extends Component{
                         {this.renderComments(this.props.comments)}
                     </CardBody>
                 </Card>
+                <Button outline onClick={this.toggleModal} >
+                  <span className="fa fa-sign-in fa-lg"></span> Comment
+                </Button>
             </div>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                  <ModalHeader toggle={this.toggleModal}>Add Comment</ModalHeader>
+                  <ModalBody>
+                    <LocalForm onSubmit={this.toggleModal}>
+                      <Row className="form-group">
+                        <Label htmlFor="stars" md={2}>Rating</Label>
+                        <Col md={10}>
+                          <Control.select model=".stars" name="stars" id="stars"
+                            className="form-control"
+                          >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </Control.select>
+                        </Col>
+                      </Row>
+                      <Row className="form-group">
+                        <Label htmlFor="name" md={2}>Your Name</Label>
+                        <Col md={10}>
+                          <Control.text model=".name" id="name" name="name"
+                            placeholder="Name"
+                            className="form-control"
+                            validators={{
+                              required, minLength:minLength(3), maxLength:maxLength(15)
+                            }}
+                          />
+                          <Errors 
+                              className="text-danger"
+                              model=".name"
+                              show="touched"
+                              messages={{
+                                  required :'Required',
+                                  minLength:'Must be grater than 3 chars',
+                                  maxLength:'Must be lest than 15'
+                              }}
+                           />
+                         </Col>
+                      </Row>
+                      
+                      <Row className="form-group">
+                        <Label htmlFor="comment" md={2}>Comment</Label>
+                        <Col md={10}>
+                          <Control.textarea model=".comment" id="comment" name="comment"
+                          rows="6"
+                          className="form-control"
+                          />
+                        </Col>
+                      </Row>
+                      <Row className="form-group">
+                          <Col md={{size: 10, offset:2}}>
+                              <Button type="submit" color="primary">
+                                  Submit
+                              </Button>
+                          </Col>
+                      </Row>
+                    </LocalForm>
+                  </ModalBody>
+                </Modal>
+            
+            </React.Fragment>
         );
         else
         return(<div></div>);
@@ -35,7 +117,11 @@ class Dishdetail extends Component{
     componentDidMount(){
         console.log("DishDetail component componentDidMount was called");
     }
-
+    toggleModal() {
+      this.setState({
+          isModalOpen: !this.state.isModalOpen
+      });
+  }
     componentDidUpdate(){
       console.log("Dishdetail Component componentDidUpdate invoked");
     }
@@ -84,6 +170,7 @@ class Dishdetail extends Component{
         else
             return(<div></div>);
     }
+    
 }
 export default Dishdetail;
 /**import React, { Component } from 'react';
