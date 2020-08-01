@@ -21,6 +21,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 // redux
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+// adding reducers
+import {addComment} from '../redux/ActionCreators';
 const mapStateToProps = state => {
   return {
     dishes: state.dishes,
@@ -32,6 +34,11 @@ const mapStateToProps = state => {
     // now all this is available to Main but as props not as state
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  addComment : (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+});
+// now this dispatcher need to passed on as a parameter to the connect at the bottom
+// so as to use it in the main function below
 class Main extends Component {
   // subsequently specifying state of the imported dishes
   constructor(props) {
@@ -79,6 +86,7 @@ class Main extends Component {
         // />
         <Dishdetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
           comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
+          addComment={this.props.addComment}
         />
       );
 
@@ -113,5 +121,5 @@ class Main extends Component {
 // <Menu dishes={this.state.dishes} />
 // this is how the dishes is made available to the Menu component as "props"
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
 // as using router so withRouter is necessary while surrounding with connect

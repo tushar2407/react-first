@@ -15,3 +15,10 @@ export const Reducer=(state = initialState, action)=>{
     return state;
 };
 // now make a configureState.js file 
+
+/**
+ * 
+ There is no need of reducer.js as it has been split into four different file
+ namely : dishes.js, promotions.js, leaders.js, comments.js
+
+ */

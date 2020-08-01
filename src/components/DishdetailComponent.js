@@ -17,10 +17,10 @@ const validEmail=(val)=> /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 class Dishdetail extends Component{
     constructor(props){
         super(props);
-        this.state={
-          isModalOpen:false
-        };
-        this.toggleModal=this.toggleModal.bind(this);
+        // this.state={
+        //   isModalOpen:false
+        // };
+        // this.toggleModal=this.toggleModal.bind(this);
     }
     render(){
       console.log("Dishdetail Component render invoked");
@@ -41,74 +41,14 @@ class Dishdetail extends Component{
                 <Card>
                     <CardTitle>Comments</CardTitle>
                     <CardBody>
-                        {this.renderComments(this.props.comments)}
+                        <RenderComments comments={this.props.comments}
+                          addComment={this.props.addComment}
+                          dishId={this.props.dish.id} />
+                        {/* {this.renderComments(this.props.comments, this.props.addComment, this.props.dish.id)} */}
                     </CardBody>
                 </Card>
-                <Button outline onClick={this.toggleModal} >
-                  <span className="fa fa-sign-in fa-lg"></span> Comment
-                </Button>
+               
             </div>
-                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                  <ModalHeader toggle={this.toggleModal}>Add Comment</ModalHeader>
-                  <ModalBody>
-                    <LocalForm onSubmit={this.toggleModal}>
-                      <Row className="form-group">
-                        <Label htmlFor="stars" md={2}>Rating</Label>
-                        <Col md={10}>
-                          <Control.select model=".stars" name="stars" id="stars"
-                            className="form-control"
-                          >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                          </Control.select>
-                        </Col>
-                      </Row>
-                      <Row className="form-group">
-                        <Label htmlFor="name" md={2}>Your Name</Label>
-                        <Col md={10}>
-                          <Control.text model=".name" id="name" name="name"
-                            placeholder="Name"
-                            className="form-control"
-                            validators={{
-                              required, minLength:minLength(3), maxLength:maxLength(15)
-                            }}
-                          />
-                          <Errors 
-                              className="text-danger"
-                              model=".name"
-                              show="touched"
-                              messages={{
-                                  required :'Required',
-                                  minLength:'Must be greater than 3 characters',
-                                  maxLength:'Must be lest than or equal to 15 chracters'
-                              }}
-                           />
-                         </Col>
-                      </Row>
-                      
-                      <Row className="form-group">
-                        <Label htmlFor="comment" md={2}>Comment</Label>
-                        <Col md={10}>
-                          <Control.textarea model=".comment" id="comment" name="comment"
-                          rows="6"
-                          className="form-control"
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="form-group">
-                          <Col md={{size: 10, offset:2}}>
-                              <Button type="submit" color="primary">
-                                  Submit
-                              </Button>
-                          </Col>
-                      </Row>
-                    </LocalForm>
-                  </ModalBody>
-                </Modal>
-            
             </React.Fragment>
         );
         else
@@ -117,11 +57,11 @@ class Dishdetail extends Component{
     componentDidMount(){
         console.log("DishDetail component componentDidMount was called");
     }
-    toggleModal() {
-      this.setState({
-          isModalOpen: !this.state.isModalOpen
-      });
-  }
+    // toggleModal() {
+    //   this.setState({
+    //       isModalOpen: !this.state.isModalOpen
+    //   });
+    // }
     componentDidUpdate(){
       console.log("Dishdetail Component componentDidUpdate invoked");
     }
@@ -145,32 +85,121 @@ class Dishdetail extends Component{
             );
         }
     }
-    renderComments(comments) {
-        console.log(comments);
-        const commentsDetails=comments.map((comment_obj)=>{
-            return(
-                <div key={comment_obj.id}>
-                    <li class="list-group-item">
-                        {comment_obj.comment}
-                    </li>
-                    <li class='list-group-item blockquote-footer'> 
-                        {comment_obj.author}&nbsp;,
-                        {new Intl.DateTimeFormat('en-US',
-                        {year :'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment_obj.date)))}
-                    </li>
-                </div>
-                
-            );
-        });
-        if(comments != null){
-            return (<div>
-                {commentsDetails}
-            </div>);
-        }
-        else
-            return(<div></div>);
-    }
     
+    
+}
+function RenderComments({comments, addComment, dishId}) {
+    const commentsDetails=comments.map((comment_obj)=>{
+        return(
+            <div key={comment_obj.id}>
+                <li class="list-group-item">
+                    {comment_obj.comment}
+                </li>
+                <li class='list-group-item blockquote-footer'> 
+                    {comment_obj.author}&nbsp;,
+                    {new Intl.DateTimeFormat('en-US',
+                    {year :'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment_obj.date)))}
+                </li>
+            </div>
+
+        );
+    });
+    if(comments != null){
+        return (<div>
+            {commentsDetails}
+            <CommentForm dishhId={dishId} addComment={addComment} />
+        </div>);
+    }
+    else
+        return(<div></div>);
+}
+class CommentForm extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      isModalOpen:false
+    };
+    this.toggleModal=this.toggleModal.bind(this);
+    this.handleSubmit=this.handleSubmit.bind(this);
+  }
+  toggleModal() {
+    this.setState({
+        isModalOpen: !this.state.isModalOpen
+    });
+  }
+  handleSubmit(values){
+    this.toggleModal();
+    this.props.addComment(this.props.dishId,values.stars, values.name, values.comment);
+  }
+  render(){
+    return(
+      <React.Fragment>
+        <Button outline onClick={this.toggleModal} >
+          <span className="fa fa-sign-in fa-lg"></span> Comment
+        </Button>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+            <ModalHeader toggle={this.toggleModal}>Add Comment</ModalHeader>
+            <ModalBody>
+              <LocalForm onSubmit={this.handleSubmit}>
+                <Row className="form-group">
+                  <Label htmlFor="stars" md={2}>Rating</Label>
+                  <Col md={10}>
+                    <Control.select model=".stars" name="stars" id="stars"
+                      className="form-control"
+                    >
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </Control.select>
+                  </Col>
+                </Row>
+                <Row className="form-group">
+                  <Label htmlFor="name" md={2}>Your Name</Label>
+                  <Col md={10}>
+                    <Control.text model=".name" id="name" name="name"
+                      placeholder="Name"
+                      className="form-control"
+                      validators={{
+                        required, minLength:minLength(3), maxLength:maxLength(15)
+                      }}
+                    />
+                    <Errors 
+                        className="text-danger"
+                        model=".name"
+                        show="touched"
+                        messages={{
+                            required :'Required',
+                            minLength:'Must be greater than 3 characters',
+                            maxLength:'Must be lest than or equal to 15 chracters'
+                        }}
+                     />
+                   </Col>
+                </Row>
+                
+                <Row className="form-group">
+                  <Label htmlFor="comment" md={2}>Comment</Label>
+                  <Col md={10}>
+                    <Control.textarea model=".comment" id="comment" name="comment"
+                    rows="6"
+                    className="form-control"
+                    />
+                  </Col>
+                </Row>
+                <Row className="form-group">
+                    <Col md={{size: 10, offset:2}}>
+                        <Button type="submit" color="primary">
+                            Submit
+                        </Button>
+                    </Col>
+                </Row>
+              </LocalForm>
+            </ModalBody>
+        </Modal>
+      </React.Fragment>
+    );
+  }
 }
 export default Dishdetail;
 /**import React, { Component } from 'react';
