@@ -8,6 +8,8 @@ import {Card, CardImg,  CardTitle, CardBody, CardDeck, Breadcrumb, BreadcrumbIte
   } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
+
+import { Loading } from './LoadingComponent';
 const required=(val)=> val && val.length;
 const maxLength=(len)=> (val)=> !(val) || (val.length<=len);
 const minLength=(len)=> (val)=> (val) && (val.length >=len);
@@ -66,24 +68,42 @@ class Dishdetail extends Component{
       console.log("Dishdetail Component componentDidUpdate invoked");
     }
     renderDish(dish){
-        if(dish != null){
-            return (
-                <CardDeck>
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardBody>{dish.description}</CardBody>
-                    </CardBody>
-                </Card>
-                </CardDeck>
-            )
-        }
-        else{
-            return (
-                <div></div>
-            );
-        }
+      if(this.props.isLoading){
+        return (
+          <div className="container">
+            <div className="row">
+              <Loading />
+            </div>
+          </div>
+        );
+      }
+      else if (this.props.errMess){
+        return (
+          <div className="continer">
+            <dic className="row">
+              <h4>{this.props.errMess}</h4>
+            </dic>
+          </div>
+        );
+      }
+      else if(dish != null){
+          return (
+              <CardDeck>
+              <Card>
+                  <CardImg width="100%" src={dish.image} alt={dish.name} />
+                  <CardBody>
+                      <CardTitle>{dish.name}</CardTitle>
+                      <CardBody>{dish.description}</CardBody>
+                  </CardBody>
+              </Card>
+              </CardDeck>
+          )
+      }
+      else{
+          return (
+              <div></div>
+          );
+      }
     }
     
     

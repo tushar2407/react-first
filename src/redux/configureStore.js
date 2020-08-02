@@ -6,7 +6,11 @@ import { Dishes } from './dishes';
 import {Comments} from './comments';
 import {Leaders} from './leaders';
 import {Promotions} from './promotions';
-import { combineReducers } from 'redux'; // for combining the 4 reducers
+import { combineReducers, applyMiddleware } from 'redux'; // for combining the 4 reducers
+
+// redux think and logger
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 export const ConfigureStore = () => {
     const store= createStore(
         // Reducer,
@@ -16,7 +20,8 @@ export const ConfigureStore = () => {
             comments: Comments,
             promotions: Promotions,
             leaders: Leaders
-        })
+        }),
+        applyMiddleware(thunk, logger)
     );
     return store;
     // now go to app.js file
