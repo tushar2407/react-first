@@ -7,7 +7,7 @@ export const Comments = (state = COMMENTS, action) => {
             comment.id = state.length;
             comment.data = new Date().toISOString();
             //alert(comment.rating);
-            alert(state[1].comment)
+            alert(action.type);
             // alert(state.concat(comment).length);
             return state.concat(comment);
         default:

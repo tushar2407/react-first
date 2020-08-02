@@ -22,7 +22,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 // adding reducers
-import {addComment, fecthDishes} from '../redux/ActionCreators';
+import {addComment} from '../redux/ActionCreators';
 // redux thunk and loggers
 import {fetchDishes} from '../redux/ActionCreators';
 
@@ -102,8 +102,6 @@ class Main extends Component {
       );
 
     }
-
-
     return (
       <div >
         <Header />

@@ -116,9 +116,9 @@ function RenderComments({comments, addComment, dishId}) {
                     {comment_obj.comment}
                 </li>
                 <li class='list-group-item blockquote-footer'> 
-                    {comment_obj.author}&nbsp;,
-                    {new Intl.DateTimeFormat('en-US',
-                    {year :'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment_obj.date)))}
+                    {comment_obj.author}&nbsp;,{comment_obj.date}
+                    {/* {new Intl.DateTimeFormat('en-US',
+                    {year :'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment_obj.date)))} */}
                 </li>
             </div>
 
@@ -127,7 +127,7 @@ function RenderComments({comments, addComment, dishId}) {
     if(comments != null){
         return (<div>
             {commentsDetails}
-            <CommentForm dishhId={dishId} addComment={addComment} />
+            <CommentForm dishId={dishId} addComment={addComment} />
         </div>);
     }
     else
@@ -149,6 +149,7 @@ class CommentForm extends Component{
   }
   handleSubmit(values){
     this.toggleModal();
+    alert(this.props.dishId+" "+values.stars);
     this.props.addComment(this.props.dishId,values.stars, values.name, values.comment);
   }
   render(){
