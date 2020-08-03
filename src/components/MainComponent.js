@@ -25,7 +25,9 @@ import { connect } from 'react-redux';
 import {addComment} from '../redux/ActionCreators';
 // redux thunk and loggers
 import {fetchDishes} from '../redux/ActionCreators';
-
+// redix forms revisited
+import { actions } from 'react-redux-form';
+// now add a dispatch to mapDispatchToProps
 const mapStateToProps = state => {
   return {
     dishes: state.dishes,
@@ -39,7 +41,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = (dispatch) => ({
   addComment : (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-  fetchDishes: () => {dispatch(fetchDishes())}
+  fetchDishes: () => {dispatch(fetchDishes())},
+  resetFeedbackForm:()=>{dispatch(actions.reset('feedback'))} // as coreesponding model will be called 'feedback'
+  // now an attribute needs to be passed to contactComponent
 });
 // now this dispatcher need to passed on as a parameter to the connect at the bottom
 // so as to use it in the main function below
@@ -109,7 +113,8 @@ class Main extends Component {
           <Route path="/home" component={HomePage} />
           <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
           <Route path="/menu/:dishId" component={DishWithId} />
-          <Route path="/contactus" component={Contact} />
+          <Route path="/contactus" component={()=><Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+          {/* now go to contactComponent */}
           <Route path="/aboutus" component={() => <About leaders={this.props.leaders} />} />
           <Redirect to="/home" />
         </Switch>

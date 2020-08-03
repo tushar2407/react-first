@@ -11,6 +11,8 @@ const minLength=(len)=> (val)=> (val) && (val.length >=len);
 const isNumber = (val)=>!isNaN(Number(val));
 const validEmail=(val)=> /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
+// redux form revisited
+import { actions} from 'react-redux-form'; 
 class Contact extends Component {
     constructor(props){
         super(props);
@@ -79,6 +81,7 @@ class Contact extends Component {
     handleSubmit(values){
         console.log("Current state is :"+JSON.stringify(values));
         alert("Submitted");
+        this.resetFeedbackForm();
     }
     render(){
         // const errors=this.validate(this.state.firstname,this.state.lastname,this.state.telnum,this.state.email);
@@ -226,7 +229,11 @@ class Contact extends Component {
                         </Form>
                         // using local form 
                         */}
-                        <LocalForm onSubmit={(values)=>this.handleSubmit(values)}> 
+                        {/* <LocalForm onSubmit={(values)=>this.handleSubmit(values)}>  
+                            update for redux-form to store its state in store
+                            so that its data is not lost if navigation to some other page
+                        */}
+                        <Form model="feedback" onSubmit={(values)=>this.handleSubmit(values)}> 
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -351,7 +358,7 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>

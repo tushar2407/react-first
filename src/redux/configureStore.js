@@ -11,6 +11,10 @@ import { combineReducers, applyMiddleware } from 'redux'; // for combining the 4
 // redux think and logger
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+
+// redux-forms revisited
+import { createForms } from 'react-redux-form'; // createForms is a reducer
+import { InitalFeedback } from './forms';
 export const ConfigureStore = () => {
     const store= createStore(
         // Reducer,
@@ -19,7 +23,11 @@ export const ConfigureStore = () => {
             dishes:Dishes,
             comments: Comments,
             promotions: Promotions,
-            leaders: Leaders
+            leaders: Leaders,
+            ...createForms({
+                feedback:InitalFeedback
+            }) // now adding a new action to reset the form
+            // go to MainComponent
         }),
         applyMiddleware(thunk, logger)
     );
