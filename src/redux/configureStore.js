@@ -14,7 +14,7 @@ import logger from 'redux-logger';
 
 // redux-forms revisited
 import { createForms } from 'react-redux-form'; // createForms is a reducer
-import { InitalFeedback } from './forms';
+import { InitialFeedback } from './forms';
 export const ConfigureStore = () => {
     const store= createStore(
         // Reducer,
@@ -25,7 +25,7 @@ export const ConfigureStore = () => {
             promotions: Promotions,
             leaders: Leaders,
             ...createForms({
-                feedback:InitalFeedback
+                feedback:InitialFeedback
             }) // now adding a new action to reset the form
             // go to MainComponent
         }),
