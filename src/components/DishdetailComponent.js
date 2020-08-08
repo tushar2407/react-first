@@ -11,6 +11,8 @@ import { LocalForm, Control, Errors } from 'react-redux-form';
 
 import { Loading } from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl';
+
+import { FadeTransform, Fade, Stagger} from 'react-animation-components';
 const required=(val)=> val && val.length;
 const maxLength=(len)=> (val)=> !(val) || (val.length<=len);
 const minLength=(len)=> (val)=> (val) && (val.length >=len);
@@ -90,13 +92,18 @@ class Dishdetail extends Component{
       else if(dish != null){
           return (
               <CardDeck>
-              <Card>
-                  <CardImg width="100%" src={baseUrl+dish.image} alt={dish.name} />
-                  <CardBody>
-                      <CardTitle>{dish.name}</CardTitle>
-                      <CardBody>{dish.description}</CardBody>
-                  </CardBody>
-              </Card>
+                <FadeTransform in 
+                  transformProps={{
+                    exitTransform:'scale(0.5) translateY(-50%)'
+                  }}>
+                  <Card>
+                      <CardImg width="100%" src={baseUrl+dish.image} alt={dish.name} />
+                      <CardBody>
+                          <CardTitle>{dish.name}</CardTitle>
+                          <CardBody>{dish.description}</CardBody>
+                      </CardBody>
+                  </Card>
+                </FadeTransform>
               </CardDeck>
           )
       }
@@ -112,6 +119,7 @@ class Dishdetail extends Component{
 function RenderComments({comments, postComment, dishId}) {
     const commentsDetails=comments.map((comment_obj)=>{
         return(
+            <Fade in>
             <div key={comment_obj.id}>
                 <li class="list-group-item">
                     {comment_obj.comment}
@@ -122,12 +130,15 @@ function RenderComments({comments, postComment, dishId}) {
                     {year :'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment_obj.date)))} */}
                 </li>
             </div>
+            </Fade>
 
         );
     });
     if(comments != null){
         return (<div>
-            {commentsDetails}
+            <Stagger in >
+              {commentsDetails}
+            </Stagger>
             <CommentForm dishId={dishId} postComment={postComment} />
         </div>);
     }
