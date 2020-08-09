@@ -24,8 +24,8 @@ import { connect } from 'react-redux';
 // adding reducers
 import {addComment} from '../redux/ActionCreators';
 // redux thunk and loggers
-import {fetchDishes, fetchComments, fetchPromos} from '../redux/ActionCreators';
-// redix forms revisited
+import {fetchDishes, fetchComments, fetchPromos, fetchLeaders} from '../redux/ActionCreators';
+// redux forms revisited
 import { actions } from 'react-redux-form';
 // now add a dispatch to mapDispatchToProps
 
@@ -51,8 +51,9 @@ const mapDispatchToProps = (dispatch) => ({
   fetchDishes: () => {dispatch(fetchDishes())},
   fetchComments: () => {dispatch(fetchComments())},
   fetchPromos: () => {dispatch(fetchPromos())},
-  resetFeedbackForm:()=>{dispatch(actions.reset('feedback'))} // as coreesponding model will be called 'feedback'
+  resetFeedbackForm:()=>{dispatch(actions.reset('feedback'))}, // as coreesponding model will be called 'feedback'
   // now an attribute needs to be passed to contactComponent
+  fetchLeaders: () => {dispatch(fetchLeaders())}
 });
 // now this dispatcher need to passed on as a parameter to the connect at the bottom
 // so as to use it in the main function below
@@ -72,6 +73,7 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
   // onDishSelect(dishId){
   //       if(this.state.selectedDish===dishId){
@@ -100,7 +102,10 @@ class Main extends Component {
           promosErrMess={this.props.promotions.errMess}
           promosLoading={this.props.promotions.isLoading}
           promotion={this.props.promotions.promotions.filter((promo) => promo.featured)[0]}
-          leader={this.props.leaders.filter((leader) => leader.featured)[0]} />
+
+          leaderErrMess={this.props.leaders.errMess}
+          leaderLoading={this.props.leaders.isLoading}
+          leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]} />
       );
     }
 
