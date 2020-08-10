@@ -52,6 +52,57 @@ export const postComment = ( dishId, rating, author, comment) => (dispatch) =>{
             alert("Comment not posted");
         });
 };
+export const addFeedback = (feedback) =>({
+    type:ActionTypes.ADD_FEEDBACK,
+    payload:feedback
+});
+export const alertFeedback = (feedback) => {
+    alert('Thank you for your feedback!' + feedback);
+};
+export const postFeedback = ( feedback ) => (dispatch) =>{
+    const newFeedback = {
+        firstname:feedback.firstname,
+        lastname:feedback.lastname,
+        telnum:feedback.telnum,
+        email:feedback.email,
+        agree:feedback.agree,
+        contactType:feedback.contactType,
+        message:feedback.message
+    }
+    newFeedback.date= new Date().toISOString();
+    return fetch(baseUrl + 'feedback',{
+        method:'POST',
+        body:JSON.stringify(newFeedback),
+        headers:{
+            'Content-type':'application/json',
+            'credentials':'same-origin'
+        },
+    })
+        .then(response=>{
+            if(response.ok){
+                alert(response.body);
+                return response;
+            }
+            else{
+                var error=new Error("Error" + response.status+" : "+response.statusText);
+                error.response=response;
+                throw error;
+            }
+        },
+        error=>{
+            var errmess=new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(response=> dispatch(addFeedback(feedback)))
+        .then(feedback => {console.log('Thank you for your feedback!', JSON.stringify(feedback.payload));
+            alert('Thank you for your feedback!' + JSON.stringify(feedback.payload))
+        })
+        .catch(error =>{
+            console.log("Post feedback ",error.message);
+            alert("Feedback not posted");
+        });
+}
 /**
  * Below are all action creator functions
  */

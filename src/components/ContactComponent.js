@@ -6,6 +6,7 @@ import {Control, LocalForm, Errors } from 'react-redux-form';
 
 // redux form revisited
 import { actions} from 'react-redux-form'; 
+import { type } from 'jquery';
 
 // form validation of redux-forms
 const required=(val)=> val && val.length;
@@ -80,9 +81,17 @@ class Contact extends Component {
     //     return errors;      
     // }
     handleSubmit(values){
-        console.log("Current state is :"+JSON.stringify(values));
-        alert("Submitted");
-        this.resetFeedbackForm();
+        // console.log("Current state is :"+JSON.stringify(values));
+        // alert("Submitted");
+        // alert(values);
+        // this.props.postFeedback(values);
+        // this.props.resetFeedbackForm();
+        // console.log('Current State is: ' + JSON.stringify(values));
+        alert(values.email);
+        alert(values['email']);
+        console.log(values);
+        this.props.postFeedback(values);
+        // this.props.resetFeedbackForm();
     }
     render(){
         // const errors=this.validate(this.state.firstname,this.state.lastname,this.state.telnum,this.state.email);
@@ -234,7 +243,7 @@ class Contact extends Component {
                             update for redux-form to store its state in store
                             so that its data is not lost if navigation to some other page
                         */}
-                        <Form model="feedback" onSubmit={(values)=>this.handleSubmit(values)}> 
+                        <Form model="feedback" onSubmit={this.handleSubmit}> 
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -251,8 +260,9 @@ class Contact extends Component {
                                         show="touched"
                                         messages={{
                                             required :'Required',
-                                            minLength:'Must be grater than 3 chars',
-                                            maxLength:'Must be lest than 15'
+                                            minLength:'Must be greater than 3 chars',
+                                            maxLength:'Must be less than 15 chars',
+                                            
                                         }}
                                      />
                                 </Col>
@@ -274,7 +284,8 @@ class Contact extends Component {
                                         messages={{
                                             required :'Required',
                                             minLength:'Must be grater than 3 chars',
-                                            maxLength:'Must be lest than 15'
+                                            maxLength:'Must be less than 15 chars',
+                                            
                                         }}
                                      />
                                 </Col>
@@ -282,22 +293,22 @@ class Contact extends Component {
                             <Row className="form-group">
                                 <Label htmlFor="telnum" md={2}>Telephone Number</Label>
                                 <Col md={10}>
-                                    <Control.text model=".tel" id="telnum" name="telnum"
+                                    <Control.text model=".telnum" id="telnum" name="telnum"
                                         placeholder="telephone number"
                                         className="form-control"
                                         validators={{
-                                            required, minLength:minLength(3), maxLength:maxLength(15),
+                                            required, minLength:minLength(3), maxLength:maxLength(25),
                                             isNumber
                                         }}
                                      />
                                 <Errors 
                                    className="text-danger"
-                                   model=".tel"
+                                   model=".telnum"
                                    show="touched"
                                    messages={{
                                        required :'Required',
                                        minLength:'Must be grater than 3 chars',
-                                       maxLength:'Must be lest than 15',
+                                       maxLength:'Must be less than 15 chars',
                                        isNumber:"must be digits"
                                    }}
                                 />
@@ -328,7 +339,7 @@ class Contact extends Component {
                                 <Col md={{size:6, offset:2}}>
                                     <div className="form-check">
                                         <Label check>
-                                            <Control.checkbox model=".agree" name="agree" 
+                                            <Control.checkbox model=".agree" name="agree" id="agree"
                                             className="form-check-input"
                                              />{ ' ' }
                                             <strong> May we contact you ?</strong>
@@ -336,7 +347,7 @@ class Contact extends Component {
                                     </div>
                                 </Col>
                                 <Col md={{size:3, offset:1}}>
-                                    <Control.select model=".contactType" name="contactype"
+                                    <Control.select model=".contactType" name="contactType" id="contactType"
                                         className="form-control" >
                                             <option> Tel. </option>
                                             <option> Email </option>

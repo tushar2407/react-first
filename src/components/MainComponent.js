@@ -30,7 +30,7 @@ import { actions } from 'react-redux-form';
 // now add a dispatch to mapDispatchToProps
 
 // impolementing a postcommment
-import { postComment } from '../redux/ActionCreators';
+import { postComment, postFeedback } from '../redux/ActionCreators';
 // change addComment to postComment below everyhwere
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -48,6 +48,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
   //addComment : (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
   postComment : (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+  postFeedback : (feedback) => dispatch(postFeedback(feedback)),
   fetchDishes: () => {dispatch(fetchDishes())},
   fetchComments: () => {dispatch(fetchComments())},
   fetchPromos: () => {dispatch(fetchPromos())},
@@ -135,7 +136,7 @@ class Main extends Component {
               <Route path="/home" component={HomePage} />
               <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
               <Route path="/menu/:dishId" component={DishWithId} />
-              <Route path="/contactus" component={()=><Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+              <Route path="/contactus" component={()=><Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
               {/* now go to contactComponent */}
               <Route path="/aboutus" component={() => <About leaders={this.props.leaders} />} />
               <Redirect to="/home" />
